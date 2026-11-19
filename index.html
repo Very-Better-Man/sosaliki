@@ -40,12 +40,122 @@ main{max-width:1050px;margin:auto;padding:0 16px 50px}.toolbar{display:flex;gap:
 .detail-note{margin:10px 0 0;color:#9eb2ca;font-size:12px}
 @media(max-width:430px){h1{font-size:23px}.card{padding:12px}.exam-grid{gap:8px}}
 
+
+.notice-overlay{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(3,8,16,.76);backdrop-filter:blur(7px)}
+.notice-overlay.show{display:flex}
+.notice-dialog{width:min(100%,390px);padding:22px 18px 18px;border:1px solid #3b506b;border-radius:20px;background:linear-gradient(155deg,#1a2a40,#101a2b);box-shadow:0 22px 70px #0009;text-align:center;animation:noticeIn .18s ease-out}
+.notice-mark{width:48px;height:48px;margin:0 auto 12px;border-radius:50%;display:grid;place-items:center;font-size:25px;font-weight:800;background:#174b3c;color:#b9ffe0}
+.notice-dialog.error .notice-mark{background:#4a2932;color:#ffd0d0}
+.notice-dialog h3{font-size:19px;margin:0 0 8px}
+.notice-dialog p{font-size:14px;line-height:1.5;color:#bdcce0;margin:0 0 18px;overflow-wrap:anywhere}
+.notice-actions{display:grid;gap:8px}
+.notice-actions button{width:100%;min-height:46px;font-weight:650}
+.notice-actions .notice-secondary{background:#22334d}
+@keyframes noticeIn{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media(prefers-reduced-motion:reduce){.notice-dialog{animation:none}}
+
+/* Новая тема и полировка интерфейса */
+:root{--page-bg:#09111e;--surface:#131e30;--surface-2:#19263b;--surface-3:#101a2a;--border:#2a3a52;--ink:#edf3fb;--subtle:#9eafc5;--button:#223852;--button-border:#38516f;--accent-bg:#2864b5}
+body{background:radial-gradient(ellipse at 50% -20%,#1c3150 0%,transparent 55%),linear-gradient(160deg,#101b2d,#09111e 65%);transition:background .25s,color .25s}
+.app-header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px 10px;max-width:1050px}
+.header-copy{min-width:0}.app-header h1{font-size:21px;letter-spacing:-.35px;margin:0}.app-header p{font-size:12px;margin:2px 0 0}
+.theme-toggle{flex:none;padding:8px 11px;border-radius:999px;font-size:12px;font-weight:700;background:linear-gradient(145deg,#263c58,#1a2b42);border-color:#405a79;box-shadow:0 3px 10px #0003}
+main{padding-top:0}.toolbar{margin:7px 0 12px;gap:7px}.toolbar button{min-height:38px;font-size:13px;font-weight:650}
+button{transition:transform .16s ease,filter .16s ease,box-shadow .16s ease,border-color .16s ease}
+button:hover{filter:brightness(1.12);box-shadow:0 4px 14px #0002}button:active{transform:scale(.97)}
+button.primary{background:linear-gradient(135deg,#347bd0,#245ba8);border-color:#5795e7;box-shadow:0 4px 12px #1b5ca544}
+button.good{background:linear-gradient(135deg,#19785a,#12533f);border-color:#329b75}
+button.danger{background:linear-gradient(135deg,#783b49,#572b38);border-color:#a65a6a}
+.exam-tile{box-shadow:0 5px 18px #0002;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
+.exam-tile:hover{border-color:#52749b;box-shadow:0 8px 22px #0003;transform:translateY(-1px)}
+.card,.group,.booking-box{box-shadow:0 7px 24px #0002}
+.slot{transition:background .18s ease,border-color .18s ease,box-shadow .18s ease,transform .18s ease}
+.slot.free:has(.slot-pick):hover{border-color:#6a9bd0;box-shadow:0 0 0 2px #4d8ac533}
+.slot.selected{border-color:#75b6ff!important;background:linear-gradient(110deg,#1b4267,#203b58)!important;box-shadow:0 0 0 2px #75b6ff55,0 0 22px #398be044;animation:selectedPulse 1.8s ease-in-out infinite}
+@keyframes selectedPulse{0%,100%{box-shadow:0 0 0 2px #75b6ff44,0 0 12px #398be022}50%{box-shadow:0 0 0 3px #75b6ff88,0 0 22px #398be055}}
+.slot.just-booked{position:relative;border-color:#5ce0a3!important;background:linear-gradient(110deg,#15563f,#1b493b)!important;box-shadow:0 0 0 3px #5ce0a366,0 0 28px #43d99566;animation:bookedFlash 2.4s ease both}
+@keyframes bookedFlash{0%{transform:scale(.985);filter:brightness(1.5)}18%{transform:scale(1.015)}40%{transform:scale(1)}100%{box-shadow:0 0 0 1px #5ce0a322,0 0 0 transparent}}
+.notice-dialog{position:relative;overflow:hidden;border-color:#3d6a62;background:radial-gradient(circle at 50% 0%,#214b43 0%,transparent 48%),linear-gradient(155deg,#1a2a40,#101a2b)}
+.notice-dialog:not(.error) .notice-mark{position:relative;background:linear-gradient(145deg,#1b9b6b,#126044);box-shadow:0 0 0 8px #32c98a18,0 0 30px #32c98a55;animation:successPop .55s cubic-bezier(.2,.9,.25,1.3) both}
+.notice-dialog:not(.error) .notice-mark:after{content:"";position:absolute;inset:-9px;border:2px solid #58e3a2;border-radius:50%;animation:successRing .9s ease-out both}
+@keyframes successPop{0%{opacity:0;transform:scale(.35) rotate(-25deg)}70%{transform:scale(1.16) rotate(5deg)}100%{opacity:1;transform:scale(1) rotate(0)}}
+@keyframes successRing{0%{opacity:.9;transform:scale(.65)}100%{opacity:0;transform:scale(1.55)}}
+
+/* Светлая тема */
+html[data-theme="light"]{color-scheme:light;--bg:#f3f6fb;--panel:#fff;--panel2:#f5f8fc;--line:#dce4ef;--text:#1c293a;--muted:#68788d;--page-bg:#f3f6fb;--surface:#fff;--surface-2:#f5f8fc;--surface-3:#edf2f8;--border:#dce4ef;--ink:#1c293a;--subtle:#68788d;--button:#e9eff7;--button-border:#d3deeb;--accent-bg:#2864b5}
+html[data-theme="light"] body{background:radial-gradient(ellipse at 50% -20%,#e0ebfa 0%,transparent 58%),linear-gradient(160deg,#f8faff,#edf2f8 70%);color:#1c293a}
+html[data-theme="light"] .app-header p,html[data-theme="light"] p,html[data-theme="light"] .muted,html[data-theme="light"] .date,html[data-theme="light"] .detail-note{color:#68788d}
+html[data-theme="light"] button{background:linear-gradient(145deg,#fff,#edf2f8);color:#26364a;border-color:#d5dfeb}
+html[data-theme="light"] button.primary{background:linear-gradient(135deg,#347bd0,#245ba8);color:#fff;border-color:#347bd0}
+html[data-theme="light"] button.good{background:linear-gradient(135deg,#d8f5e8,#c5eedb);color:#14583c;border-color:#a8dec4}
+html[data-theme="light"] button.danger{background:linear-gradient(135deg,#fae5e8,#f4d5da);color:#8a3042;border-color:#e7b9c2}
+html[data-theme="light"] .theme-toggle{background:linear-gradient(145deg,#fff,#e9eff7);color:#33445a;border-color:#d5dfeb}
+html[data-theme="light"] .status{background:#fff;border-color:#dce4ef;color:#52647a}
+html[data-theme="light"] .success{background:#e4f7ee;border-color:#a9dec3;color:#176344}
+html[data-theme="light"] .error{background:#fff0f1;border-color:#e7b9c2;color:#8a3042}
+html[data-theme="light"] .card,html[data-theme="light"] .adminbox{background:rgba(255,255,255,.94);border-color:#dce4ef;box-shadow:0 7px 24px #28456812}
+html[data-theme="light"] .pill,html[data-theme="light"] .tile-status{background:#e9eff7;color:#50647e}
+html[data-theme="light"] .pill.open,html[data-theme="light"] .tile-status.open{background:#d9f4e7;color:#176344}
+html[data-theme="light"] .pill.closed,html[data-theme="light"] .tile-status.closed{background:#fae3e7;color:#96394a}
+html[data-theme="light"] .pill.soon,html[data-theme="light"] .tile-status.soon{background:#fff1d5;color:#805a16}
+html[data-theme="light"] .progress{background:#e2e9f2}
+html[data-theme="light"] .group{background:#f5f8fc;border-color:#e0e7f0}
+html[data-theme="light"] .grouptitle{color:#2b3c52}
+html[data-theme="light"] .slot{background:#fff;border-color:#dce4ef;color:#34465d}
+html[data-theme="light"] .slot.free{color:#34465d}
+html[data-theme="light"] .slot.taken{background:#e0f4e9;border-color:#b4dfc6;color:#176344}
+html[data-theme="light"] .slot .num{color:#74859a}
+html[data-theme="light"] .slot-pick{background:#e4efff;color:#245b9e;border-color:#b9d2f3}
+html[data-theme="light"] .slot.selected{background:#e3efff!important;border-color:#4387d4!important;color:#214d7b;box-shadow:0 0 0 2px #4387d455}
+html[data-theme="light"] .slot.just-booked{background:#d9f5e7!important;border-color:#36a978!important;color:#14583c;box-shadow:0 0 0 3px #36a97855}
+html[data-theme="light"] .booking-box{background:#edf5ff;border-color:#b7d2f2}
+html[data-theme="light"] .booking-box input,html[data-theme="light"] .adminbox input,html[data-theme="light"] .adminbox select,html[data-theme="light"] .row input,html[data-theme="light"] .row select{background:#fff;color:#26364a;border-color:#cbd8e8}
+html[data-theme="light"] .exam-tile{background:linear-gradient(145deg,#fff,#f0f5fb);border-color:#dce4ef;box-shadow:0 5px 18px #28456812}
+html[data-theme="light"] .tile-title{color:#1c2d43}
+html[data-theme="light"] .tile-date,html[data-theme="light"] .tile-free{color:#687b93}
+html[data-theme="light"] .notice-dialog{background:radial-gradient(circle at 50% 0%,#e0f7ec 0%,transparent 48%),linear-gradient(155deg,#fff,#f3f7fc);border-color:#cbded5}
+html[data-theme="light"] .notice-dialog.error{background:linear-gradient(155deg,#fff,#fff1f2);border-color:#e7b9c2}
+html[data-theme="light"] .notice-dialog p{color:#52647a}
+html[data-theme="light"] .notice-dialog h3{color:#1c293a}
+html[data-theme="light"] .notice-actions .notice-secondary{background:#e9eff7;color:#26364a}
+html[data-theme="light"] .footer{color:#8291a4}
+@media(max-width:430px){.app-header{padding:10px 12px 8px}.app-header h1{font-size:19px}.app-header p{font-size:11px}.theme-toggle{padding:7px 9px;font-size:11px}main{padding-left:12px;padding-right:12px}.toolbar{margin-top:5px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+
+/* Исправление контраста свободных мест в светлой теме */
+html[data-theme="light"] .slot.free:has(.slot-pick){
+  background:#ffffff!important;
+  border-color:#d3deeb!important;
+  color:#26364a!important;
+}
+html[data-theme="light"] .slot.free:has(.slot-pick) .num{color:#718198!important}
+html[data-theme="light"] .slot.free:has(.slot-pick) .slot-pick{
+  background:linear-gradient(145deg,#e8f1ff,#d9e9ff)!important;
+  border:1px solid #a9c7ef!important;
+  color:#174d8b!important;
+  font-weight:700;
+}
+html[data-theme="light"] .slot.free:has(.slot-pick):active{background:#edf5ff!important}
+html[data-theme="light"] .slot.selected{
+  background:#e5f0ff!important;
+  color:#214d7b!important;
+}
+html[data-theme="light"] .slot.selected .num{color:#58799f!important}
+html[data-theme="light"] .slot.selected .slot-pick{
+  background:#cfe2ff!important;
+  color:#174d8b!important;
+  border-color:#8fb6ed!important;
+}
 </style>
 </head>
 <body>
-<header>
-  <h1>Запись на зачёты</h1>
-  <p>Выберите зачёт, пятёрку и свободное место.</p>
+<header class="app-header">
+  <div class="header-copy">
+    <h1>Запись на зачёты</h1>
+    <p>Выберите зачёт, пятёрку и свободное место.</p>
+  </div>
+  <button id="themeToggle" class="theme-toggle" type="button" aria-label="Переключить тему" title="Переключить тему">☀️ Светлая</button>
 </header>
 <main>
   <div class="toolbar">
@@ -70,6 +180,18 @@ main{max-width:1050px;margin:auto;padding:0 16px 50px}.toolbar{display:flex;gap:
   <section id="credits" class="grid" aria-live="polite"></section>
   <div class="footer">Данные обновляются автоматически. Время зачётов указано по Минску.</div>
 </main>
+
+<div id="noticeModal" class="notice-overlay" role="dialog" aria-modal="true" aria-labelledby="noticeTitle" aria-describedby="noticeText">
+  <div id="noticeDialog" class="notice-dialog">
+    <div id="noticeMark" class="notice-mark" aria-hidden="true">✓</div>
+    <h3 id="noticeTitle">Готово</h3>
+    <p id="noticeText"></p>
+    <div class="notice-actions">
+      <button id="noticePrimary" class="primary" type="button">Понятно</button>
+    </div>
+  </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 (() => {
@@ -79,7 +201,48 @@ main{max-width:1050px;margin:auto;padding:0 16px 50px}.toolbar{display:flex;gap:
   const $ = id => document.getElementById(id);
   const state = { db:null, credits:[], groups:[], slots:[], isAdmin:false, user:null, busy:false, moveFrom:null, selectedCreditId:null, selectedSlot:null };
   const dbReady = () => !!state.db;
+  const THEME_KEY='credit_signup_theme';
+  function applyTheme(theme){
+    const chosen=theme==='light'?'light':'dark';
+    document.documentElement.dataset.theme=chosen;
+    const button=$('themeToggle');
+    if(button){button.textContent=chosen==='dark'?'☀️ Светлая':'🌙 Тёмная';button.setAttribute('aria-label',chosen==='dark'?'Включить светлую тему':'Включить тёмную тему');}
+    try{localStorage.setItem(THEME_KEY,chosen);}catch{}
+    const meta=document.querySelector('meta[name="theme-color"]');
+    if(meta)meta.content=chosen==='dark'?'#101827':'#f3f6fb';
+  }
+  function initTheme(){
+    let saved='dark';
+    try{saved=localStorage.getItem(THEME_KEY)||'dark';}catch{}
+    applyTheme(saved);
+    $('themeToggle').addEventListener('click',()=>applyTheme(document.documentElement.dataset.theme==='dark'?'light':'dark'));
+  }
+  initTheme();
   function message(text, type='') { const el=$('message'); el.textContent=text; el.className='status'+(type?' '+type:''); }
+
+  let noticeAfterClose = null;
+  function showNotice(title, text, type='success', actionLabel='Понятно', afterClose=null) {
+    const overlay=$('noticeModal'), dialog=$('noticeDialog');
+    $('noticeTitle').textContent=title;
+    $('noticeText').textContent=text;
+    $('noticeMark').textContent=type==='error'?'!':'✓';
+    dialog.classList.toggle('error',type==='error');
+    $('noticePrimary').textContent=actionLabel;
+    noticeAfterClose=afterClose;
+    overlay.classList.add('show');
+    document.body.style.overflow='hidden';
+    $('noticePrimary').focus();
+  }
+  function closeNotice() {
+    $('noticeModal').classList.remove('show');
+    document.body.style.overflow='';
+    const action=noticeAfterClose; noticeAfterClose=null;
+    if(typeof action==='function') action();
+  }
+  function jumpToSlot(slotId) {
+    const target=document.getElementById('slot-'+slotId);
+    if(target){target.scrollIntoView({behavior:'smooth',block:'center'});target.classList.remove('just-booked');void target.offsetWidth;target.classList.add('just-booked');}
+  }
   function esc(v) { return String(v ?? '').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
   function dateText(value) {
     const d=new Date(value);
@@ -94,8 +257,20 @@ main{max-width:1050px;margin:auto;padding:0 16px 50px}.toolbar{display:flex;gap:
     return ['Открыта автоматически','open'];
   }
   function localKey(id){return 'credit_signup_'+id;}
-  function getLocal(id){try{return JSON.parse(localStorage.getItem(localKey(id))||'null')}catch{return null}}
-  function saveLocal(id,data){try{localStorage.setItem(localKey(id),JSON.stringify(data))}catch{}}
+  // Поддерживаем старый формат {token,surname} и новый список независимых записей.
+  function getLocals(id){
+    try{
+      const raw=JSON.parse(localStorage.getItem(localKey(id))||'null');
+      if(!raw)return [];
+      const list=Array.isArray(raw)?raw:[raw];
+      return list.filter(x=>x&&typeof x.token==='string'&&typeof x.surname==='string');
+    }catch{return [];}
+  }
+  function saveLocalEntry(id,entry){
+    const list=getLocals(id).filter(x=>x.token!==entry.token);
+    list.push({token:entry.token,surname:entry.surname});
+    try{localStorage.setItem(localKey(id),JSON.stringify(list));}catch{}
+  }
   function newToken(){
     const bytes=new Uint8Array(32); crypto.getRandomValues(bytes);
     return Array.from(bytes,b=>b.toString(16).padStart(2,'0')).join('');
@@ -113,7 +288,8 @@ main{max-width:1050px;margin:auto;padding:0 16px 50px}.toolbar{display:flex;gap:
       for(let i=0;i<results.length;i++) if(results[i].error) throw new Error('Ошибка загрузки ('+names[i]+'): '+results[i].error.message);
       state.credits=results[0].data||[]; state.groups=results[1].data||[]; state.slots=results[2].data||[];
       render();
-      message('Загружено: '+state.credits.length+' зачётов · '+state.groups.length+' пятёрок · '+state.slots.length+' мест.','success');
+      // Не показываем технический счётчик после обычной загрузки.
+      $('message').classList.add('hidden');
     } catch(e) {
       message('Не удалось загрузить данные: '+e.message+' Обновите страницу или проверьте доступ Supabase.','error');
       $('credits').innerHTML='<div class="empty">Не удалось загрузить таблицу. Текст ошибки указан выше.</div>';
@@ -152,11 +328,17 @@ main{max-width:1050px;margin:auto;padding:0 16px 50px}.toolbar{display:flex;gap:
     if(state.selectedSlot){
       const chosen=slots.find(x=>x.id===state.selectedSlot.id);
       if(chosen && !chosen.surname && !admin){
-        const local=getLocal(c.id);
+        const locals=getLocals(c.id);
+        const personPicker=locals.length?`<label for="bookingPerson" class="muted">Кого записываем?</label>
+          <select id="bookingPerson" style="width:100%;margin:7px 0 2px;background:var(--surface);color:var(--ink);border:1px solid var(--border);border-radius:10px;padding:11px">
+            <option value="new">＋ Новый человек</option>
+            ${locals.map((person,i)=>`<option value="${esc(person.token)}">${esc(person.surname)} · моя сохранённая запись ${i+1}</option>`).join('')}
+          </select>`:'';
         booking=`<form id="bookingForm" class="booking-box">
           <h3>Вы выбрали: пятёрка ${esc(state.selectedSlot.groupNumber)}, место ${chosen.position}</h3>
-          <p>Введите фамилию и подтвердите запись.</p>
-          <input id="bookingSurname" maxlength="80" minlength="2" required autocomplete="family-name" placeholder="Ваша фамилия" value="${esc(local?.surname||'')}">
+          ${personPicker}
+          <p>${locals.length?'Для новой фамилии оставьте «Новый человек». Чтобы переместить уже записанного человека, выберите его из списка.':'Введите фамилию и подтвердите запись.'}</p>
+          <input id="bookingSurname" maxlength="80" minlength="2" required autocomplete="family-name" placeholder="Фамилия человека" value="">
           <div class="row"><button type="button" id="cancelBooking">Отмена</button><button type="submit" class="primary" id="confirmBooking">Подтвердить запись</button></div>
         </form>`;
       }else{
@@ -184,7 +366,7 @@ main{max-width:1050px;margin:auto;padding:0 16px 50px}.toolbar{display:flex;gap:
           return `<div class="group"><div class="grouptitle"><span>Пятёрка ${g.group_number}</span>${admin?`<button class="small danger" data-action="delete-group" data-id="${g.id}">Удалить</button>`:''}</div>
           <div class="slots">${gs.map(x=>{
             const picked=state.selectedSlot?.id===x.id;
-            return `<div class="slot ${x.surname?'taken':'free'} ${picked?'selected':''}"><span class="num">Место ${x.position}</span>${x.surname?esc(x.surname):'Свободно'}${admin?`${x.surname?`<button data-action="edit-slot" data-id="${x.id}">Изменить</button><button data-action="select-move" data-id="${x.id}">Источник</button>`:`<button data-action="edit-slot" data-id="${x.id}">Добавить</button>${state.moveFrom?`<button data-action="move-here" data-id="${x.id}">Переместить сюда</button>`:''}`}`:(!x.surname?`<button class="slot-pick" data-action="pick-slot" data-id="${x.id}" data-group="${g.group_number}" aria-label="Выбрать место ${x.position}">Выбрать</button>`:'')}</div>`;
+            return `<div id="slot-${x.id}" class="slot ${x.surname?'taken':'free'} ${picked?'selected':''}"><span class="num">Место ${x.position}</span>${x.surname?esc(x.surname):'Свободно'}${admin?`${x.surname?`<button data-action="edit-slot" data-id="${x.id}">Изменить</button><button data-action="select-move" data-id="${x.id}">Источник</button>`:`<button data-action="edit-slot" data-id="${x.id}">Добавить</button>${state.moveFrom?`<button data-action="move-here" data-id="${x.id}">Переместить сюда</button>`:''}`}`:(!x.surname?`<button class="slot-pick" data-action="pick-slot" data-id="${x.id}" data-group="${g.group_number}" aria-label="Выбрать место ${x.position}">Выбрать</button>`:'')}</div>`;
           }).join('')}</div></div>`;
         }).join('')}</div>
         ${booking}
@@ -204,27 +386,53 @@ main{max-width:1050px;margin:auto;padding:0 16px 50px}.toolbar{display:flex;gap:
     catch(e){message(e.message||String(e),'error');}
     finally{state.busy=false;button.disabled=false;}
   }
+
   async function submitReservation() {
     const credit=state.selectedCreditId;
     const chosen=state.selectedSlot;
     const input=$('bookingSurname');
     if(!credit||!chosen||!input)return;
     const clean=input.value.trim();
-    if(clean.length<2||clean.length>80){message('Фамилия должна содержать от 2 до 80 символов.','error');input.focus();return;}
-    const previous=getLocal(credit);
-    const token=previous?.token||newToken();
+    if(clean.length<2||clean.length>80){
+      showNotice('Проверьте фамилию','Фамилия должна содержать от 2 до 80 символов.','error');
+      input.focus();
+      return;
+    }
+    const picker=$('bookingPerson');
+    const selectedToken=picker?.value;
+    const token=selectedToken&&selectedToken!=='new'?selectedToken:newToken();
     const submit=$('confirmBooking');
     if(state.busy)return;
-    state.busy=true;submit.disabled=true;
+    state.busy=true;
+    if(submit)submit.disabled=true;
+    const bookedSlotId=chosen.id;
     try{
-      await rpc('reserve_exam_slot',{p_credit_id:credit,p_group_number:chosen.groupNumber,p_position:chosen.position,p_surname:clean,p_token:token});
-      saveLocal(credit,{token,surname:clean});
+      const result=await rpc('reserve_exam_slot',{
+        p_credit_id:credit,
+        p_group_number:chosen.groupNumber,
+        p_position:chosen.position,
+        p_surname:clean,
+        p_token:token
+      });
+      if(result && result.success===false) throw new Error(result.message||result.error||'Не удалось сохранить запись.');
+      saveLocalEntry(credit,{token,surname:clean});
       state.selectedSlot=null;
       await loadData(false);
-      message('Готово! Вы записаны. Ключ для самостоятельного переноса сохранён на этом устройстве.','success');
-    }catch(e){message(e.message||String(e),'error');}
-    finally{state.busy=false;if($('confirmBooking'))$('confirmBooking').disabled=false;}
+      showNotice('Вы успешно записаны!','Ваша фамилия сохранена. Место закреплено за вами.','success','Перейти к записи',()=>jumpToSlot(bookedSlotId));
+    }catch(e){
+      const raw=String(e?.message||e||'Неизвестная ошибка');
+      let friendly=raw;
+      if(/closed|закрыт|недоступ|not.*open/i.test(raw)) friendly='Запись на этот зачёт сейчас закрыта. Попробуйте позже или обратитесь к организатору.';
+      else if(/occupied|занят|already.*taken/i.test(raw)) friendly='Это место уже заняли. Обновите список и выберите другое свободное место.';
+      else if(/duplicate|уже запис|surname/i.test(raw)) friendly='Похоже, эта фамилия уже записана на данный зачёт. Проверьте список мест.';
+      showNotice('Не удалось записаться',friendly,'error');
+      await loadData(false);
+    }finally{
+      state.busy=false;
+      if($('confirmBooking'))$('confirmBooking').disabled=false;
+    }
   }
+
   async function adminLogin() {
     const email=$('email').value.trim(),password=$('password').value;
     if(!email||!password){message('Введите почту и пароль.','error');return;}
@@ -253,6 +461,27 @@ main{max-width:1050px;margin:auto;padding:0 16px 50px}.toolbar{display:flex;gap:
     render();
   }
   $('refreshBtn').addEventListener('click',()=>loadData());
+
+  $('noticePrimary').addEventListener('click',()=>{
+    $('noticeModal').classList.remove('show');
+    document.body.style.overflow='';
+    const action=noticeAfterClose; noticeAfterClose=null;
+    if(typeof action==='function') action();
+  });
+  $('noticeModal').addEventListener('click',e=>{
+    if(e.target.id==='noticeModal'){
+      $('noticeModal').classList.remove('show');
+      document.body.style.overflow='';
+      noticeAfterClose=null;
+    }
+  });
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape'&&$('noticeModal').classList.contains('show')){
+      $('noticeModal').classList.remove('show');
+      document.body.style.overflow='';
+      noticeAfterClose=null;
+    }
+  });
   $('adminToggle').addEventListener('click',()=>$('adminPanel').classList.toggle('hidden'));
   $('loginBtn').addEventListener('click',adminLogin);
   $('password').addEventListener('keydown',e=>{if(e.key==='Enter')adminLogin()});
@@ -267,6 +496,14 @@ main{max-width:1050px;margin:auto;padding:0 16px 50px}.toolbar{display:flex;gap:
   });
   $('credits').addEventListener('submit',e=>{
     if(e.target.id==='bookingForm'){e.preventDefault();submitReservation();}
+  });
+  $('credits').addEventListener('change',e=>{
+    if(e.target.id==='bookingPerson'){
+      const token=e.target.value;
+      const person=getLocals(state.selectedCreditId).find(x=>x.token===token);
+      const field=$('bookingSurname');
+      if(field){field.value=person?.surname||'';field.focus();}
+    }
   });
   $('credits').addEventListener('click',e=>{
     const confirmButton=e.target.closest('#confirmBooking');
@@ -290,7 +527,14 @@ main{max-width:1050px;margin:auto;padding:0 16px 50px}.toolbar{display:flex;gap:
       state.selectedSlot={id:slot.id,groupNumber:Number(b.dataset.group),position:slot.position};
       render();
       const form=$('bookingForm');
-      if(form){form.scrollIntoView({behavior:'smooth',block:'center'});$('bookingSurname')?.focus({preventScroll:true});}
+      if(form){
+        const field=$('bookingSurname');
+        form.scrollIntoView({behavior:'smooth',block:'center'});
+        setTimeout(()=>{
+          field?.focus();
+          form.scrollIntoView({behavior:'smooth',block:'center'});
+        },280);
+      }
       return;
     }
     if(!state.isAdmin){message('Нужны права администратора.','error');return;}
